@@ -5,6 +5,7 @@ pragma AbiHeader expire;
 contract Tasks {
 
     uint8 newTaskId = 0;
+    uint8 taskCount = 0;
 
     struct task {
         string name;
@@ -31,6 +32,7 @@ contract Tasks {
     {
         taskList[newTaskId] = task(taskName, now, false);
         newTaskId++;
+        taskCount++;
     }
 
     function openTaskNumber() public view checkOwnerAndAccept returns (uint8) 
@@ -45,6 +47,8 @@ contract Tasks {
 
     function getTaskList() public view checkOwnerAndAccept returns (mapping (uint8=>string))
     {
+        require(taskCount > 0, 106, "There is no tasks.");
+        
         mapping (uint8 => string) list;
 
         for (uint8 i = 0; i < newTaskId; i++)
@@ -68,6 +72,7 @@ contract Tasks {
         require(taskList.exists(taskId), 104, "Task with this id is not exist.");
 
         delete taskList[taskId];
+        taskCount--;
     }
 
     function mapTaskAsDone(uint8 taskId) public checkOwnerAndAccept

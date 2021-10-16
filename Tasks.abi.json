@@ -69,6 +69,7 @@
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"newTaskId","type":"uint8"},
+		{"name":"taskCount","type":"uint8"},
 		{"components":[{"name":"name","type":"string"},{"name":"timeAddition","type":"uint32"},{"name":"isDone","type":"bool"}],"name":"taskList","type":"map(uint8,tuple)"}
 	]
 }
