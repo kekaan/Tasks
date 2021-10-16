@@ -37,7 +37,7 @@ contract Tasks {
     {
         uint8 num = 0;
         for (uint8 i = 0; i < newTaskId; i++)
-            if(taskList[i].timeAddition != 0 && !taskList[i].isDone)
+            if(taskList.exists(i) && !taskList[i].isDone)
                 num++;
 
         return num;
@@ -49,7 +49,7 @@ contract Tasks {
 
         for (uint8 i = 0; i < newTaskId; i++)
         {
-            if(taskList[i].timeAddition != 0)
+            if(taskList.exists(i))
                 list[i] = taskList[i].name;
         }
 
@@ -58,21 +58,21 @@ contract Tasks {
 
     function getTaskDescription(uint8 taskId) public view checkOwnerAndAccept returns (task)
     {
-        require(taskList[taskId].timeAddition != 0, 104, "Task with this id is not exist.");
+        require(taskList.exists(taskId), 104, "Task with this id is not exist.");
 
         return taskList[taskId];
     }
 
     function deleteTask(uint8 taskId) public checkOwnerAndAccept
     {
-        require(taskList[taskId].timeAddition != 0, 104, "Task with this id is not exist.");
+        require(taskList.exists(taskId), 104, "Task with this id is not exist.");
 
         delete taskList[taskId];
     }
 
     function mapTaskAsDone(uint8 taskId) public checkOwnerAndAccept
     {
-        require(taskList[taskId].timeAddition != 0, 104, "Task with this id is not exist.");
+        require(taskList.exists(taskId), 104, "Task with this id is not exist.");
         require(!taskList[taskId].isDone, 105, "Task is already done.");
         
         taskList[taskId].isDone = true;
