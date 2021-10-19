@@ -47,16 +47,16 @@ contract Tasks {
 
     function getTaskList() public view checkOwnerAndAccept returns (mapping (uint8=>string))
     {
-        require(taskCount > 0, 106, "There is no tasks.");
+        require(taskCount > 0, 106, "There are no tasks.");
+        require(openTaskNumber() > 0, 107, "There are no open tasks");
         
         mapping (uint8 => string) list;
 
         for (uint8 i = 0; i < newTaskId; i++)
         {
-            if(taskList.exists(i))
+            if(taskList.exists(i) && !taskList[i].isDone)
                 list[i] = taskList[i].name;
         }
-
         return list;
     }
 
